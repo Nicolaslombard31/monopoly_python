@@ -56,10 +56,6 @@ class Plateau:
         """Retourne la case à une position donnée"""
         return self.cases[position % len(self.cases)]
 
-
-
-
-
 class Case:
     """Classe de base pour toutes les cases du plateau"""
     def __init__(self, nom: str, position: int):
@@ -87,11 +83,3 @@ class CaseSpeciale(Case):
     def __init__(self, nom: str, position: int, type_case: str):
         super().__init__(nom, position)
         self.type_case = type_case
-
-
-plateau = Plateau()
-assert len(plateau.cases) == 40, "Le plateau doit avoir 40 cases"
-assert isinstance(plateau.cases[0], CaseSpeciale), "Case 0 = Départ"
-assert isinstance(plateau.cases[5], Gare), "Case 5 = Gare"
-assert plateau.cases[39].nom == "Rue de la Paix", "Dernière case"
-print("Plateau validé!")

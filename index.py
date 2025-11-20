@@ -7,7 +7,7 @@ class Monopoly:
     """Classe principale qui gère une partie de Monopoly"""
     def __init__(self, noms_joueurs: List[str]):
         self.plateau = Plateau()
-        self.joueurs = [Joueur(nom) for nom in noms_joueurs]
+        self.joueurs = [Joueur(nom, self.plateau) for nom in noms_joueurs]
         self.joueur_actuel_index = 0
         self.tour_numero = 0
     
@@ -27,8 +27,14 @@ class Monopoly:
         total = de1 + de2
         print(f" Dés: {de1} + {de2} = {total}")
         joueur.deplacer(total)
-        pass
+        return total
 
 game = Monopoly(["Alice", "Bob"])
-
 joueur = game.jouer_tour(game.joueurs[0])
+joueur = game.jouer_tour(game.joueurs[1])
+joueur = game.jouer_tour(game.joueurs[0])
+joueur = game.jouer_tour(game.joueurs[1])
+joueur = game.jouer_tour(game.joueurs[0])
+joueur = game.jouer_tour(game.joueurs[1])
+joueur = game.jouer_tour(game.joueurs[0])
+joueur = game.jouer_tour(game.joueurs[1])

@@ -9,6 +9,7 @@ class Joueur:
         self.tours_en_prison = 0
         self.est_en_faillite = False
         self.plateau = plateau  # <-- AJOUT
+        self.proprietes = []
 
     def deplacer(self, nombre_cases: int, plateau_taille: int = 40):
         """Déplace simplement le joueur"""
@@ -28,18 +29,18 @@ class Joueur:
             return False
         
         self.argent -= propriete.prix
+        self.proprietes.append(propriete)
 
         print(f"{self.nom} a acheté {propriete.nom} pour {propriete.prix}€. Il lui reste {self.argent}€.")
         return True
     
-    def payer_loyer(self, propriete: Propriete) -> bool:
+    def payer_loyer(self, montant: int) -> bool:
         """Paye le loyer à un autre joueur"""
-        loyer = propriete.loyer_base
-        if self.argent < loyer:
+        if self.argent < montant:
             self.est_en_faillite = True
             return False
         
-        self.argent -= loyer
+        self.argent -= montant
         return True
     
     def recevoir_argent(self, montant: int):
@@ -56,5 +57,13 @@ class Joueur:
     
     def possede_quartier_entier(self, couleur: str) -> bool:
         """Vérifie si le joueur possède toutes les propriétés d'une couleur donnée"""
-        
-        pass
+        nb_par_couleur = {
+        "marron": 2, "bleu_clair": 3, "rose": 3, "orange": 3,"rouge": 3,
+        "jaune": 3, "vert": 3, "bleu_fonce": 2
+        }
+        proprietes_couleur = [p for p in self.plateau.proprietes if p.couleur == couleur and p.proprietaire == self]
+        if len(proprietes_couleur) == nb_par_couleur.get(couleur, 0):
+            print(f"{self.nom} possède toutes les propriétés de couleur {couleur}.")
+            return True
+        print(f"{self.nom} ne possède pas toutes les propriétés de couleur {couleur}.")
+        return False

@@ -18,6 +18,8 @@ class Monopoly:
         return de1, de2
     
     def jouer_tour(self, joueur: Joueur):
+        # joueur.possede_quartier_entier("marron")
+        # pass
         """Joue un tour complet pour un joueur"""
         # TODO SÉANCE 2: Implémenter la logique complète d'un tour
         print(f"\n--- Tour de {joueur.nom} ---")
@@ -30,11 +32,7 @@ class Monopoly:
         return total
 
 game = Monopoly(["Alice", "Bob"])
-joueur = game.jouer_tour(game.joueurs[0])
-joueur = game.jouer_tour(game.joueurs[1])
-joueur = game.jouer_tour(game.joueurs[0])
-joueur = game.jouer_tour(game.joueurs[1])
-joueur = game.jouer_tour(game.joueurs[0])
-joueur = game.jouer_tour(game.joueurs[1])
-joueur = game.jouer_tour(game.joueurs[0])
-joueur = game.jouer_tour(game.joueurs[1])
+# print(f"Propriétés initiales de {game.joueurs[0].nom} : {[p.nom for p in game.joueurs[0].proprietes]}")
+# print(f"Propriétés initiales de {game.joueurs[1].nom} : {[p.nom for p in game.joueurs[1].proprietes]}")
+j1 = game.jouer_tour(game.joueurs[0])
+j2 = game.jouer_tour(game.joueurs[1])

@@ -85,16 +85,56 @@ class Propriete(Case):
             joueur.acheter_propriete(self)
             self.proprietaire = joueur
             return
+        elif self.proprietaire == joueur:
+            print(f"{joueur.nom} est arrivé sur sa propre propriété {self.nom}.")
+            return
         else:
-            loyer = self.loyer_base
-            joueur.payer_loyer(self)
+            loyer = self.calculer_loyer()
+            joueur.payer_loyer(loyer)
             self.proprietaire.recevoir_argent(loyer)
             print(f"{joueur.nom} paye {loyer}€ de loyer à {self.proprietaire.nom}. il lui reste {joueur.argent}€.")
+    
+    def calculer_loyer(self) -> int:
+        return self.loyer_base
 
 class Gare(Propriete):
     """Case représentant une gare"""
     def __init__(self, nom: str, position: int, prix: int, loyer: int):
         super().__init__(nom, position, prix, loyer, "Gare")
+    
+    def action(self, joueur: 'Joueur', jeu: 'Monopoly'):
+        if self.proprietaire is None:
+            joueur.acheter_propriete(self)
+            self.proprietaire = joueur
+            return
+        elif self.proprietaire == joueur:
+            print(f"{joueur.nom} est arrivé sur sa propre propriété {self.nom}.")
+            return
+        else:
+            loyer_gare = self.calculer_loyer()
+            joueur.payer_loyer(loyer_gare)
+            self.proprietaire.recevoir_argent(loyer_gare)
+            print(f"{joueur.nom} paye {loyer_gare}€ de loyer à {self.proprietaire.nom}. il lui reste {joueur.argent}€.")
+    
+    
+    def calculer_loyer(self) -> int:
+        if self.proprietaire is None:
+            return 0 
+
+        nb_gares = sum(
+            1 for p in self.proprietaire.proprietes
+            if isinstance(p, Gare)
+        )
+
+        if nb_gares == 1:
+            return 25
+        elif nb_gares == 2:
+            return 50
+        elif nb_gares == 3:
+            return 100
+        elif nb_gares == 4:
+            return 200
+        return 0
 
 class CaseSpeciale(Case, ABC):
     """Cases comme Départ, Prison, Taxe, etc."""
